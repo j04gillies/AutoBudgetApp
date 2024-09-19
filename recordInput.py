@@ -4,7 +4,7 @@ def get_user_inputs():
     layout = [
         [sg.OptionMenu(["Expense","Income","Save"],key="recordtype")],
         [sg.Text("Enter label:"), sg.Input(key="label")],
-        [sg.Text("Enter value:"), sg.Input(key="value")],
+        [sg.Text("Enter value:"), sg.Input(key="recordvalue")],
         [sg.Button("Submit"), sg.Button("Cancel")]
     ]
 
@@ -17,8 +17,8 @@ def get_user_inputs():
         if event == "Submit":
             #begin input validation
             try:
-                value = float(values["value"])
-                if value < 0:
+                value = float(values["recordvalue"])
+                if value <= 0:
                     sg.popup("Please input a value above 0",title="Input Error")
                     continue
             except ValueError:
@@ -26,5 +26,6 @@ def get_user_inputs():
                 continue
 
             window.close()
-            return values
+            return [values["label"], values["recordtype"],values["recordvalue"]]
     window.close()
+    return None
