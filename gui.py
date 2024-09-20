@@ -11,7 +11,7 @@ if os.path.isfile("records.json"):
 
 #Table 1
 tb_headings = ["Type","Label","Value"]
-
+#
 #Layout
 layout = [ [sg.Text("Auto Budget App",font="Any 15",justification='center',expand_x=True)],
           [sg.Table(values=all_user_inputs, headings=tb_headings, key="-TABLE-", expand_x=True)],
