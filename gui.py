@@ -11,11 +11,19 @@ if os.path.isfile("records.json"):
 
 #Table 1
 tb_headings = ["Type","Label","Value"]
+tbl1 = sg.Table(values=all_user_inputs, 
+                headings=tb_headings, key="-TABLE-", 
+                expand_x=True, 
+                justification="center",
+                enable_events=True,
+                select_mode=sg.TABLE_SELECT_MODE_BROWSE)
 #
 #Layout
-layout = [ [sg.Text("Auto Budget App",font="Any 15",justification='center',expand_x=True)],
-          [sg.Table(values=all_user_inputs, headings=tb_headings, key="-TABLE-", expand_x=True)],
-          [sg.Button("Add Records",key="-AddRecord-"),sg.Button("Clear Saved",key="-ClearSaved-")]]
+layout = [[sg.Text("Auto Budget App",font="Any 15",justification='center',expand_x=True)],
+          [tbl1],
+          [sg.Button("Add Records",key="-AddRecord-"),
+           sg.Button("Clear Saved",key="-ClearSaved-"),
+           sg.Button("Remove Line",key="-Remove-")]]
 
 window = sg.Window("Auto Budget App", layout)
 
@@ -38,6 +46,17 @@ while True:
         all_user_inputs.clear()
         window["-TABLE-"].update(values=all_user_inputs)
         window.refresh()
+    
+    if event == "-Remove-":
+        selected_rows = values["-TABLE-"]
+
+        if selected_rows:
+            selected_index = selected_rows[0]
+            del all_user_inputs[selected_index]
+            window["-TABLE-"].update(values=all_user_inputs)
+            functions.save_records_to_file(all_user_inputs)
+        else:
+            sg.popup("Please select a row to remove.", title="No Selection Error")
             
 
 window.close()
