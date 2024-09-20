@@ -9,15 +9,20 @@ all_user_inputs = []  # List to store all records
 if os.path.isfile("records.json"):
     all_user_inputs = functions.retrieve_saved_records()  # Call the function, not append it
 
+#Table 1
+tb_headings = ["Type","Label","Value"]
+
 #Layout
 layout = [ [sg.Text("Auto Budget App",font="Any 15",justification='center',expand_x=True)],
-          [sg.Button("Add Records",key="-AddRecord-"),sg.Button("List Records",key="-ListRecords-"),sg.Button("")]]
+          [sg.Table(values=all_user_inputs, headings=tb_headings, key="-TABLE-", expand_x=True)],
+          [sg.Button("Add Records",key="-AddRecord-"),sg.Button("Clear Saved",key="-ClearSaved-")]]
 
 window = sg.Window("Auto Budget App", layout)
 
 while True:
     event, values = window.read()
     if event == sg.WIN_CLOSED or event == "Cancel":
+        functions.save_records_to_file(all_user_inputs)
         break
     if event == "-AddRecord-":
         userInput = recordInput.get_user_inputs()
@@ -26,14 +31,13 @@ while True:
         if userInput:
             all_user_inputs.append(userInput)
             functions.save_records_to_file(all_user_inputs)
-
-    if event == "-ListRecords-":
-        if all_user_inputs:
-            for i,inputs in enumerate(all_user_inputs,1):
-                label, recordtype, value = inputs
-                print(f"Label: {label}, type: {recordtype}, value: {value}")
-        else:
-            print("No records to list.")
+            window["-TABLE-"].update(values=all_user_inputs)
+            window.refresh()
+    
+    if event == "-ClearSaved-":
+        all_user_inputs.clear()
+        window["-TABLE-"].update(values=all_user_inputs)
+        window.refresh()
             
 
 window.close()
