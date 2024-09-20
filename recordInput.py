@@ -2,7 +2,7 @@ import PySimpleGUI as sg
 
 def get_user_inputs():
     layout = [
-        [sg.OptionMenu(["Expense","Income","Save"],key="recordtype")],
+        [sg.OptionMenu(["Income","Expense","Save"],key="recordtype")],
         [sg.Text("Enter label:"), sg.Input(key="label")],
         [sg.Text("Enter value:"), sg.Input(key="recordvalue")],
         [sg.Button("Submit"), sg.Button("Cancel")]
@@ -26,6 +26,6 @@ def get_user_inputs():
                 continue
 
             window.close()
-            return [values["label"], values["recordtype"],values["recordvalue"]]
+            return [values["recordtype"], values["label"], values["recordvalue"]]
     window.close()
     return None
