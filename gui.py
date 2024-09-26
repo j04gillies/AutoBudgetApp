@@ -24,7 +24,8 @@ layout = [[sg.Text("Auto Budget App",font="Any 15",justification='center',expand
           [tbl1],
           [sg.Button("Add Records",key="-AddRecord-"),
            sg.Button("Clear Saved",key="-ClearSaved-"),
-           sg.Button("Remove Line",key="-Remove-")],
+           sg.Button("Remove Line",key="-Remove-"),
+           sg.Button("Sort",key="-Sort-")],
            [sg.Button("Display Budget", key="-DisplayBudget-",expand_x=True)]]
 
 window = sg.Window("Auto Budget App", layout)
@@ -46,6 +47,11 @@ while True:
     
     if event == "-ClearSaved-":
         all_user_inputs.clear()
+        window["-TABLE-"].update(values=all_user_inputs)
+        window.refresh()
+    
+    if event == "-Sort-":
+        all_user_inputs = functions.sort_records(all_user_inputs)
         window["-TABLE-"].update(values=all_user_inputs)
         window.refresh()
     

@@ -11,3 +11,15 @@ def retrieve_saved_records():
     except (FileNotFoundError, json.JSONDecodeError):
         return []  # If the file is not found or empty, return an empty list
     
+def sort_records(data):
+    income = []
+    expense = []
+    save = []
+    for x in data:
+        if x[0] == "Income":
+            income.append(x)
+        elif x[0] == "Expense":
+            expense.append(x)
+        else:
+            save.append(x)
+    return income + expense + save
