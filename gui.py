@@ -13,17 +13,19 @@ if os.path.isfile("records.json"):
 tb_headings = ["Type","Label","Value"]
 tbl1 = sg.Table(values=all_user_inputs, 
                 headings=tb_headings, key="-TABLE-", 
-                expand_x=True, 
-                justification="center",
+                expand_x=True,
+                expand_y=True,
+                justification="center",                
                 enable_events=True,
                 select_mode=sg.TABLE_SELECT_MODE_BROWSE)
-#
+
 #Layout
 layout = [[sg.Text("Auto Budget App",font="Any 15",justification='center',expand_x=True)],
           [tbl1],
           [sg.Button("Add Records",key="-AddRecord-"),
            sg.Button("Clear Saved",key="-ClearSaved-"),
-           sg.Button("Remove Line",key="-Remove-")]]
+           sg.Button("Remove Line",key="-Remove-")],
+           [sg.Button("Display Budget", key="-DisplayBudget-",expand_x=True)]]
 
 window = sg.Window("Auto Budget App", layout)
 
