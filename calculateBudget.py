@@ -7,6 +7,8 @@ def displayBudget(budget_records):
     ]
     income, expense, save = functions.calculate_saving(budget_records)
 
+    print("Income = ", str(income))
+    print("Expense = ",str(expense))
     print("You can save",str(income - expense))
 
     window = sg.Window("Budget", layout)

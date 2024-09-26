@@ -40,10 +40,10 @@ def calculate_saving(data):
             save.append(x)
     
     for x in income:
-        income_value =+ int(x[2])
+        income_value += int(x[2])
     for x in expense:
-        expense_value =+ int(x[2])
+        expense_value += int(x[2])
     for x in save:
-        save_value =+ int(x[2])
+        save_value += int(x[2])
     
     return income_value, expense_value, save_value
