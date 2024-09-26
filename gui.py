@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import recordInput
 import functions
+import calculateBudget
 import os
 
 all_user_inputs = []  # List to store all records
@@ -35,6 +36,8 @@ while True:
     if event == sg.WIN_CLOSED or event == "Cancel":
         functions.save_records_to_file(all_user_inputs)
         break
+
+    #Will prompt user with a record creation popup to add new records to list
     if event == "-AddRecord-":
         userInput = recordInput.get_user_inputs()
         print("Added a record.")
@@ -44,20 +47,25 @@ while True:
             functions.save_records_to_file(all_user_inputs)
             window["-TABLE-"].update(values=all_user_inputs)
             window.refresh()
-    
+
+    #will remove all records from saved data and visible data
     if event == "-ClearSaved-":
         all_user_inputs.clear()
         window["-TABLE-"].update(values=all_user_inputs)
         window.refresh()
     
+    if event == "-DisplayBudget-":
+        calculateBudget.displayBudget(all_user_inputs)
+
+    #will sort all record in order of Income, Expense and Save
     if event == "-Sort-":
         all_user_inputs = functions.sort_records(all_user_inputs)
         window["-TABLE-"].update(values=all_user_inputs)
-        window.refresh()
+        functions.save_records_to_file(all_user_inputs)
     
+    #Will remove the selected record from the table and update list
     if event == "-Remove-":
         selected_rows = values["-TABLE-"]
-
         if selected_rows:
             selected_index = selected_rows[0]
             del all_user_inputs[selected_index]

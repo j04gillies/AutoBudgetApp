@@ -23,3 +23,27 @@ def sort_records(data):
         else:
             save.append(x)
     return income + expense + save
+
+def calculate_saving(data):
+    income = []
+    income_value = 0
+    expense = []
+    expense_value = 0
+    save = []
+    save_value = 0
+    for x in data:
+        if x[0] == "Income":
+            income.append(x)
+        elif x[0] == "Expense":
+            expense.append(x)
+        else:
+            save.append(x)
+    
+    for x in income:
+        income_value =+ int(x[2])
+    for x in expense:
+        expense_value =+ int(x[2])
+    for x in save:
+        save_value =+ int(x[2])
+    
+    return income_value, expense_value, save_value
